@@ -1,0 +1,65 @@
+---
+
+output: html_document
+---
+# Packages
+The app relies on the following packages
+```{r}
+
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(stats4)
+library(scales)
+library(plotly)
+library(shinycssloaders)
+library(googledrive)
+library(googlesheets4)
+library(DT)
+library(tidybayes)
+library(ggtext)
+library(cowplot)
+
+```
+
+# Code sources
+
+Beta distribution parameters 
+calculated from mean and variation is sourced from [this](https://stats.stackexchange.com/questions/12232/calculating-the-parameters-of-a-beta-distribution-using-the-mean-and-variance/12239#12239) Stack Excange post by [Dave Kincaid](https://stats.stackexchange.com/users/118/dave-kincaid)
+```{r}
+normalbeta <- function(mu, var) {
+  alpha0 <- ((1 - mu) / var ^ 2 - 1 / mu) * mu ^ 2
+  beta0 <- alpha0 * (1 / mu - 1)
+  list(alpha0 = alpha0, beta0 = beta0)
+}
+```
+
+Exact solution to the probability of any difference between the groups is sourced from [Introduction to Empirical Bayes](http://varianceexplained.org/r/empirical-bayes-book/) by [Dabid Robinson](https://twitter.com/drob)
+```{r}
+h <- function(alpha_a, beta_a,
+              alpha_b, beta_b) {
+  j <- seq.int(0, round(alpha_b) - 1)
+  log_vals <-
+    (
+      lbeta(alpha_a + j, beta_a + beta_b) - log(beta_b + j) -
+        lbeta(1 + j, beta_b) - lbeta(alpha_a, beta_a)
+    )
+  1 - sum(exp(log_vals))
+}
+```
+
+
+# Further reading
+For a demonstration on the principles underlying the app, see [this](https://discourse.datamethods.org/t/empirical-bayes-for-rct-interpretarion/2922) Datamethods post by Fernando Zampieri [@f_g_zampieri](twitter.com/f_g_zampieri)
+
+For an introduction to the principles underlying this use of beta distributions see [this](https://karinknudson.com/dirichletprocesses.html) excellent post by [Karin Knudson](https://twitter.com/karinknudson) 
+
+For a wider introduction to empirical bayes in R see [Introduction to Empirical Bayes](http://varianceexplained.org/r/empirical-bayes-book/) by [Dabid Robinson](https://twitter.com/drob)
+
+
+# Author
+Lars Mølgaard Saxhaug 
+[@load_dependent](https://twitter.com/load_dependent)
+
+Use and share freely!
+

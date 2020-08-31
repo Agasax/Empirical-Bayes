@@ -1,0 +1,12 @@
+---
+
+output: html_document
+---
+## Introduction 
+
+This interactive shiny app allows empirical bayesian analysis using beta distributions based on summary data from published trials with binary outcomes. 
+
+Data derived prior is based on the sum of the two groups
+
+
+It is still a work in progress. Please get in touch with any comments or requests through  [@load_dependent](twitter.com/load_dependent) or <lars.molgaard.saxhaug@ntnu.no>
